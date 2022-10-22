@@ -1,4 +1,9 @@
+plugins {
+    id "com.google.cloud.artifactregistry.gradle-plugin" version "2.1.5"
+}
+
 apply plugin: "com.android.application"
+apply plugin: 'kotlin-android'
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -129,6 +134,14 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+repositories {
+    google()
+    mavenCentral()
+    maven {
+        url "artifactregistry://us-east1-maven.pkg.dev/minds-digital-238513/mobile-sdk-android"
+    }
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -141,6 +154,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        buildConfigField "String", "MINDS_DIGITAL_TOKEN", "\"${MINDS_DIGITAL_TOKEN}\""
 
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
@@ -246,6 +260,14 @@ android {
 
         }
     }
+
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -279,6 +301,9 @@ dependencies {
     }
 
     implementation project(':react-native-vector-icons')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation 'digital.minds.clients.sdk.android:staging:1.16.0'
+    implementation 'digital.minds.clients.sdk.kotlin.core:staging:1.0.0'
 }
 
 if (isNewArchitectureEnabled()) {
@@ -318,3 +343,4 @@ project.ext.vectoricons = [
     iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
 ]
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply plugin: 'com.google.cloud.artifactregistry.gradle-plugin'

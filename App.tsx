@@ -1,19 +1,14 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  Image,
-  NativeModules,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
 
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import MindsDigitalModule, {MindsSDKResponse} from './MindsDigitalModule';
 
 const App = () => {
+  const [cpf, setCpf] = useState('');
+  const [phone, setPhone] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -33,6 +28,7 @@ const App = () => {
                 style={styles.input}
                 keyboardType="numeric"
                 placeholder="CPF"
+                onChangeText={_cpf => setCpf(_cpf)}
               />
             </View>
 
@@ -42,6 +38,7 @@ const App = () => {
                 style={styles.input}
                 keyboardType="numeric"
                 placeholder="Telefone + DDD"
+                onChangeText={_phone => setPhone(_phone)}
               />
             </View>
           </View>
@@ -51,7 +48,16 @@ const App = () => {
               <Button
                 title="Cadastro por voz"
                 color="#17CEAB"
-                onPress={() => NativeModules}
+                onPress={() =>
+                  MindsDigitalModule.enrollment(
+                    cpf,
+                    phone,
+                    (response: MindsSDKResponse) => {
+                      let json = JSON.stringify(response, null, 4);
+                      console.log(json);
+                    },
+                  )
+                }
               />
             </View>
 
@@ -59,7 +65,16 @@ const App = () => {
               <Button
                 title="Autenticação por voz"
                 color="#141540"
-                onPress={() => setModalVisible(true)}
+                onPress={() =>
+                  MindsDigitalModule.enrollment(
+                    cpf,
+                    phone,
+                    (response: MindsSDKResponse) => {
+                      let json = JSON.stringify(response, null, 4);
+                      console.log(json);
+                    },
+                  )
+                }
               />
             </View>
           </View>
