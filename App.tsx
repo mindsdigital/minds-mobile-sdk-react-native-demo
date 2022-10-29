@@ -88,7 +88,7 @@ const App = () => {
                   color="#141540"
                   onPress={() => {
                     setDisableVerification(true);
-                    MindsDigitalModule.enrollment(
+                    MindsDigitalModule.verification(
                       cpf,
                       phone,
                       (response: MindsSDKResponse) => {

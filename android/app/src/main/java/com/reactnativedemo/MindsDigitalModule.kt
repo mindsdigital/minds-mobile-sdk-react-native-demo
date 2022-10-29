@@ -51,6 +51,7 @@ class MindsDigitalModule internal constructor(context: ReactApplicationContext?)
 
     @ReactMethod
     fun verification(cpf: String, phone: String, verificationCallback: Callback) {
+        callback = verificationCallback
         val verificationMindsSDK = MindsConfigJava.verification(
             cpf,
             phone,
