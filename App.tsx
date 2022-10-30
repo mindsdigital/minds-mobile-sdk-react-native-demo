@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import MindsDigitalModule, {MindsSDKResponse} from './MindsDigitalModule';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { TextInputMask } from "react-native-masked-text";
 
 const App = () => {
   const [mindsSDKResponse, setMindsSDKResponse] = useState('');
@@ -38,21 +39,32 @@ const App = () => {
             <View style={styles.inputs}>
               <View style={styles.inputContainer}>
                 <Icon name="contacts" size={20} color="#000" />
-                <TextInput
+                <TextInputMask
                   style={styles.input}
-                  keyboardType="numeric"
+                  type={'cpf'}
                   placeholder="CPF"
-                  onChangeText={_cpf => setCpf(_cpf)}
+                  value={cpf}
+                  onChangeText={_cpf => {
+                    setCpf(_cpf);
+                  }}
                 />
               </View>
 
               <View style={styles.inputContainer}>
                 <Icon name="phone" size={20} color="#000" />
-                <TextInput
+                <TextInputMask
                   style={styles.input}
-                  keyboardType="numeric"
+                  type={'cel-phone'}
+                  options={{
+                    maskType: 'BRL',
+                    withDDD: true,
+                    dddMask: '(99) ',
+                  }}
                   placeholder="Telefone + DDD"
-                  onChangeText={_phone => setPhone(_phone)}
+                  value={phone}
+                  onChangeText={_phone => {
+                    setPhone(_phone);
+                  }}
                 />
               </View>
             </View>
