@@ -49,6 +49,9 @@ const App = () => {
                   }}
                 />
               </View>
+              {!(cpf.length > 0) && (
+                <Text style={{color: 'red'}}>obrigatório</Text>
+              )}
 
               <View style={styles.inputContainer}>
                 <Icon name="phone" size={20} color="#000" />
@@ -67,6 +70,9 @@ const App = () => {
                   }}
                 />
               </View>
+              {!(phone.length > 0) && (
+                <Text style={{color: 'red'}}>obrigatório</Text>
+              )}
             </View>
 
             <View style={styles.buttons}>
