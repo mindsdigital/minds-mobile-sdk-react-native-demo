@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   responseTitle: {
-    fontFamily: 'Inter',
     fontStyle: 'normal',
     fontWeight: '700',
     fontSize: 18,
@@ -223,7 +222,6 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   responseDescription: {
-    fontFamily: 'Inter',
     fontStyle: 'normal',
     fontWeight: '400',
     fontSize: 16,

@@ -56,6 +56,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
+  self.navController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+  self.window.rootViewController = self.navController;
   [self.window makeKeyAndVisible];
   return YES;
 }
