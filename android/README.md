@@ -284,11 +284,11 @@ Chame os métodos enrollment ou verification do `MindsDigitalModule` criado.
     title="Autenticação por voz"
     color="#141540"
     onPress={() =>
-        MindsDigitalModule.enrollment(
+        MindsDigitalModule.authentication(
         cpf,
         phone,
-        (response: MindsSDKResponse) => {
-            let json = JSON.stringify(response, null, 4);
+        (response: jsonString) => {
+            let json = JSON.parse(jsonString)
             console.log(json);
         },
         )
