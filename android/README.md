@@ -218,36 +218,63 @@ import {NativeModules} from 'react-native';
 
 const {MindsDigitalModule} = NativeModules;
 
-export interface MindsSDKResponse {
-  id?: number;
-  success?: boolean;
-  message?: string;
-  externalId?: string;
-  status?: string;
-  cpf?: string;
-  verificationId?: string;
-  action?: string;
-  whitelisted?: boolean;
-  fraudRisk?: string;
-  enrollmentExternalId?: string;
-  matchPrediction?: string;
-  confidence?: string;
-}
 
 interface MindsDigitalInterface {
   enrollment(
     cpf: string,
     phone: string,
-    callback: (response: MindsSDKResponse) => void,
+    callback: (jsonString: string) => void,
   ): void;
   verification(
     cpf: string,
     phone: string,
-    callback: (response: MindsSDKResponse) => void,
+    callback: (response: string) => void,
   ): void;
 }
 
 export default MindsDigitalModule as MindsDigitalInterface;
+```
+Exemplo de classe que pode ser criada para mapear no react native
+
+```javascript
+interface VoiceMatchResponse {
+  success?: boolean;
+  error?: Error;
+  id?: number;
+  cpf?: string;
+  external_id?: string;
+  created_at?: string;
+  result?: Result;
+  details?: Details;
+}
+
+interface Error {
+  code: string;
+  description: string;
+}
+
+interface Result {
+  recommended_action: string;
+  reasons: Array<string>;
+}
+
+interface Details {
+  flag: Flag;
+  voice_match: VoiceMatch;
+}
+
+interface Flag {
+  id: number;
+  type: string;
+  description: string;
+  status: string;
+}
+
+interface VoiceMatch {
+  result: string;
+  confidence: string;
+  status: string;
+}
 ```
 
 Chame os métodos enrollment ou verification do `MindsDigitalModule` criado.
