@@ -1,35 +1,30 @@
 ### Primeiros passos
 
-Os primeiros passos é adicionar a MindsSDK no projeto Android do React Native, seguindo a documentação do projeto Android em <https://sandbox-api.minds.digital/docs/sdk/android/visao_geral>
+Os primeiros passos é adicionar a MindsSDK no projeto Android do React Native, seguindo a documentação do projeto Android em <https://api.minds.digital/docs/sdk/android/visao_geral>
 
 ### Criar arquivo MindsConfigJava.kt
 
 Em seguida deve ser criado o arquivo MindsConfigJava.kt
 
 ```kotlin
-package com.reactnativedemo
-
-import digital.minds.clients.sdk.kotlin.domain.helpers.ProcessType
-import digital.minds.clients.sdk.kotlin.main.MindsSDK
-
 object MindsConfigJava {
     fun enrollment(cpf: String, phone: String, token: String): MindsSDK {
         return MindsSDK.Builder()
             .setToken(token)
             .setCPF(cpf)
-            .setExternalID("4")
             .setPhoneNumber(phone)
+            .setShowDetails(true)
             .setProcessType(ProcessType.ENROLLMENT)
             .build()
     }
 
-    fun verification(cpf: String, phone: String, token: String): MindsSDK {
+    fun authentication(cpf: String, phone: String, token: String): MindsSDK {
         return MindsSDK.Builder()
             .setToken(token)
             .setCPF(cpf)
-            .setExternalID("4")
             .setPhoneNumber(phone)
-            .setProcessType(ProcessType.VERIFICATION)
+            .setShowDetails(true)
+            .setProcessType(ProcessType.AUTHENTICATION)
             .build()
     }
 }
@@ -127,23 +122,37 @@ class MindsDigitalModule internal constructor(context: ReactApplicationContext?)
     ) {
         val mindsSDKResponse = data?.extras?.get(VOICE_MATCH_RESPONSE) as VoiceMatchResponse
 
-        val reactNativeResponse: WritableMap = Arguments.createMap()
+        val jsonObject = JSONObject()
+        jsonObject.put("success", mindsSDKResponse.success)
+        jsonObject.put("error", JSONObject().apply {
+            put("code", mindsSDKResponse.error?.code)
+            put("description", mindsSDKResponse.error?.description)
+        })
+        jsonObject.put("id", mindsSDKResponse.id)
+        jsonObject.put("cpf", mindsSDKResponse.cpf)
+        jsonObject.put("external_id", mindsSDKResponse.external_id)
+        jsonObject.put("created_at", mindsSDKResponse.created_at)
+        jsonObject.put("result", JSONObject().apply {
+            put("recommended_action", mindsSDKResponse.result?.recommended_action)
+            put("reasons", JSONArray(mindsSDKResponse.result?.reasons))
+        })
+        jsonObject.put("details", JSONObject().apply {
+            jsonObject.put("flag", JSONObject().apply {
+                put("id", mindsSDKResponse.details?.flag?.id)
+                put("type", mindsSDKResponse.details?.flag?.type)
+                put("description", mindsSDKResponse.details?.flag?.description)
+                put("status", mindsSDKResponse.details?.flag?.status)
+            })
+            put("voice_match", JSONObject().apply {
+                put("result", mindsSDKResponse.details?.voice_match?.result)
+                put("confidence", mindsSDKResponse.details?.voice_match?.confidence)
+                put("status", mindsSDKResponse.details?.voice_match?.status)
+            })
+        })
 
-        mindsSDKResponse.id?.let { reactNativeResponse.putInt("id", it) }
-        mindsSDKResponse.success?.let { reactNativeResponse.putBoolean("success", it) }
-        reactNativeResponse.putString("message", mindsSDKResponse.message)
-        reactNativeResponse.putString("external_id", mindsSDKResponse.externalId)
-        reactNativeResponse.putString("status", mindsSDKResponse.status)
-        reactNativeResponse.putString("cpf", mindsSDKResponse.cpf)
-        reactNativeResponse.putString("verification_id", mindsSDKResponse.verificationId)
-        reactNativeResponse.putString("action", mindsSDKResponse.action)
-        mindsSDKResponse.whitelisted?.let { reactNativeResponse.putBoolean("whitelisted", it) }
-        reactNativeResponse.putString("fraud_risk", mindsSDKResponse.fraudRisk)
-        reactNativeResponse.putString("enrollment_external_id", mindsSDKResponse.enrollmentExternalId)
-        reactNativeResponse.putString("match_prediction", mindsSDKResponse.matchPrediction)
-        reactNativeResponse.putString("confidence", mindsSDKResponse.confidence)
+        val jsonString = jsonObject.toString()
 
-        callback.invoke(reactNativeResponse)
+        callback.invoke(jsonString)
     }
 
     override fun onNewIntent(p0: Intent?) {}
@@ -209,36 +218,63 @@ import {NativeModules} from 'react-native';
 
 const {MindsDigitalModule} = NativeModules;
 
-export interface MindsSDKResponse {
-  id?: number;
-  success?: boolean;
-  message?: string;
-  externalId?: string;
-  status?: string;
-  cpf?: string;
-  verificationId?: string;
-  action?: string;
-  whitelisted?: boolean;
-  fraudRisk?: string;
-  enrollmentExternalId?: string;
-  matchPrediction?: string;
-  confidence?: string;
-}
 
 interface MindsDigitalInterface {
   enrollment(
     cpf: string,
     phone: string,
-    callback: (response: MindsSDKResponse) => void,
+    callback: (jsonString: string) => void,
   ): void;
-  verification(
+  authentication(
     cpf: string,
     phone: string,
-    callback: (response: MindsSDKResponse) => void,
+    callback: (jsonString: string) => void,
   ): void;
 }
 
 export default MindsDigitalModule as MindsDigitalInterface;
+```
+Exemplo de classe que pode ser criada para mapear o JSON 
+
+```javascript
+interface VoiceMatchResponse {
+  success?: boolean;
+  error?: Error;
+  id?: number;
+  cpf?: string;
+  external_id?: string;
+  created_at?: string;
+  result?: Result;
+  details?: Details;
+}
+
+interface Error {
+  code: string;
+  description: string;
+}
+
+interface Result {
+  recommended_action: string;
+  reasons: Array<string>;
+}
+
+interface Details {
+  flag: Flag;
+  voice_match: VoiceMatch;
+}
+
+interface Flag {
+  id: number;
+  type: string;
+  description: string;
+  status: string;
+}
+
+interface VoiceMatch {
+  result: string;
+  confidence: string;
+  status: string;
+}
 ```
 
 Chame os métodos enrollment ou verification do `MindsDigitalModule` criado.
@@ -248,11 +284,11 @@ Chame os métodos enrollment ou verification do `MindsDigitalModule` criado.
     title="Autenticação por voz"
     color="#141540"
     onPress={() =>
-        MindsDigitalModule.enrollment(
+        MindsDigitalModule.authentication(
         cpf,
         phone,
-        (response: MindsSDKResponse) => {
-            let json = JSON.stringify(response, null, 4);
+        (response: jsonString) => {
+            let json = JSON.parse(jsonString)
             console.log(json);
         },
         )
