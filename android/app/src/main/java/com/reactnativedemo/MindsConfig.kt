@@ -8,8 +8,8 @@ object MindsConfigJava {
         return MindsSDK.Builder()
             .setToken(token)
             .setCPF(cpf)
-            .setExternalID("4")
             .setPhoneNumber(phone)
+            .setShowDetails(true)
             .setProcessType(ProcessType.ENROLLMENT)
             .build()
     }
@@ -18,9 +18,9 @@ object MindsConfigJava {
         return MindsSDK.Builder()
             .setToken(token)
             .setCPF(cpf)
-            .setExternalID("4")
             .setPhoneNumber(phone)
-            .setProcessType(ProcessType.VERIFICATION)
+            .setShowDetails(true)
+            .setProcessType(ProcessType.AUTHENTICATION)
             .build()
     }
 }

@@ -14,6 +14,8 @@ import digital.minds.clients.sdk.kotlin.domain.constants.VOICE_MATCH_RESPONSE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 
 class MindsDigitalModule internal constructor(context: ReactApplicationContext?) :
     ReactContextBaseJavaModule(context), ActivityEventListener {
@@ -88,21 +90,37 @@ class MindsDigitalModule internal constructor(context: ReactApplicationContext?)
 
         val reactNativeResponse: WritableMap = Arguments.createMap()
 
-        mindsSDKResponse.id?.let { reactNativeResponse.putInt("id", it) }
-        mindsSDKResponse.success?.let { reactNativeResponse.putBoolean("success", it) }
-        reactNativeResponse.putString("message", mindsSDKResponse.message)
-        reactNativeResponse.putString("external_id", mindsSDKResponse.externalId)
-        reactNativeResponse.putString("status", mindsSDKResponse.status)
-        reactNativeResponse.putString("cpf", mindsSDKResponse.cpf)
-        reactNativeResponse.putString("verification_id", mindsSDKResponse.verificationId)
-        reactNativeResponse.putString("action", mindsSDKResponse.action)
-        mindsSDKResponse.whitelisted?.let { reactNativeResponse.putBoolean("whitelisted", it) }
-        reactNativeResponse.putString("fraud_risk", mindsSDKResponse.fraudRisk)
-        reactNativeResponse.putString("enrollment_external_id", mindsSDKResponse.enrollmentExternalId)
-        reactNativeResponse.putString("match_prediction", mindsSDKResponse.matchPrediction)
-        reactNativeResponse.putString("confidence", mindsSDKResponse.confidence)
+        val jsonObject = JSONObject()
+        jsonObject.put("success", mindsSDKResponse.success)
+        jsonObject.put("error", JSONObject().apply {
+            put("code", mindsSDKResponse.error?.code)
+            put("description", mindsSDKResponse.error?.description)
+        })
+        jsonObject.put("id", mindsSDKResponse.id)
+        jsonObject.put("cpf", mindsSDKResponse.cpf)
+        jsonObject.put("external_id", mindsSDKResponse.external_id)
+        jsonObject.put("created_at", mindsSDKResponse.created_at)
+        jsonObject.put("result", JSONObject().apply {
+            put("recommended_action", mindsSDKResponse.result?.recommended_action)
+            put("reasons", JSONArray(mindsSDKResponse.result?.reasons))
+        })
+        jsonObject.put("details", JSONObject().apply {
+            jsonObject.put("flag", JSONObject().apply {
+                put("id", mindsSDKResponse.details?.flag?.id)
+                put("type", mindsSDKResponse.details?.flag?.type)
+                put("description", mindsSDKResponse.details?.flag?.description)
+                put("status", mindsSDKResponse.details?.flag?.status)
+            })
+            put("voice_match", JSONObject().apply {
+                put("result", mindsSDKResponse.details?.voice_match?.result)
+                put("confidence", mindsSDKResponse.details?.voice_match?.confidence)
+                put("status", mindsSDKResponse.details?.voice_match?.status)
+            })
+        })
 
-        callback.invoke(reactNativeResponse)
+        val jsonString = jsonObject.toString()
+
+        callback.invoke(jsonString)
     }
 
     override fun onNewIntent(p0: Intent?) {}

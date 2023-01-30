@@ -1,20 +1,17 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Alert, Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import MindsDigitalModule, {MindsSDKResponse} from './MindsDigitalModule';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import MindsDigitalModule, { } from './MindsDigitalModule';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TextInputMask } from "react-native-masked-text";
 
 const App = () => {
   const [mindsSDKResponse, setMindsSDKResponse] = useState('');
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
-  const [status, setStatus] = useState('null');
-  const [confidence, setConfidence] = useState('null');
-  const [match, setMatch] = useState('null');
   const [disableEnrollment, setDisableEnrollment] = useState(false);
   const [disableVerification, setDisableVerification] = useState(false);
 
@@ -23,10 +20,10 @@ const App = () => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleSheetChanges = useCallback((_: number) => {}, []);
+  const handleSheetChanges = useCallback((_: number) => { }, []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <View style={styles.container}>
           <KeyboardAwareScrollView>
@@ -50,7 +47,7 @@ const App = () => {
                 />
               </View>
               {!(cpf.length > 0) && (
-                <Text style={{color: 'red'}}>obrigatório</Text>
+                <Text style={{ color: 'red' }}>obrigatório</Text>
               )}
 
               <View style={styles.inputContainer}>
@@ -71,7 +68,7 @@ const App = () => {
                 />
               </View>
               {!(phone.length > 0) && (
-                <Text style={{color: 'red'}}>obrigatório</Text>
+                <Text style={{ color: 'red' }}>obrigatório</Text>
               )}
             </View>
 
@@ -82,17 +79,24 @@ const App = () => {
                   title="Cadastro por voz"
                   color="#17CEAB"
                   onPress={() => {
+                    if (!cpf || !phone) {
+                      Alert.alert("Atenção", "CPF e telefone são obrigatórios");
+                      return;
+                    }
                     setDisableEnrollment(true);
                     MindsDigitalModule.enrollment(
                       cpf,
                       phone,
-                      (response: MindsSDKResponse) => {
-                        setMindsSDKResponse(JSON.stringify(response, null, 4));
+                      (response: string) => {
+                        try {
+                          let jsonString = JSON.parse(response)
+                          setMindsSDKResponse(JSON.stringify(jsonString, null, 4));
+                        } catch (error) {
+                          console.log(response)
+                          setMindsSDKResponse(JSON.stringify(response, null, 4));
+                        }
                         handlePresentModalPress();
                         setDisableEnrollment(false);
-                        setStatus(response.status ?? 'null');
-                        setConfidence(response.confidence ?? 'null');
-                        setMatch(response.matchPrediction ?? 'null');
                       },
                     );
                   }}
@@ -105,17 +109,24 @@ const App = () => {
                   title="Autenticação por voz"
                   color="#141540"
                   onPress={() => {
+                    if (!cpf || !phone) {
+                      Alert.alert("Atenção", "CPF e telefone são obrigatórios");
+                      return;
+                    }
                     setDisableVerification(true);
                     MindsDigitalModule.verification(
                       cpf,
                       phone,
-                      (response: MindsSDKResponse) => {
-                        setMindsSDKResponse(JSON.stringify(response, null, 4));
+                      (response: string) => {
+                        try {
+                          let jsonString = JSON.parse(response)
+                          setMindsSDKResponse(JSON.stringify(jsonString, null, 4));
+                        } catch (error) {
+                          console.log(response)
+                          setMindsSDKResponse(JSON.stringify(response, null, 4));
+                        }
                         handlePresentModalPress();
                         setDisableVerification(false);
-                        setStatus(response.status ?? 'null');
-                        setConfidence(response.confidence ?? 'null');
-                        setMatch(response.matchPrediction ?? 'null');
                       },
                     );
                   }}
@@ -127,33 +138,19 @@ const App = () => {
               <Image style={styles.logo} source={require('./Logo.png')} />
             </View>
           </KeyboardAwareScrollView>
+
           <BottomSheetModal
             enablePanDownToClose={true}
             ref={bottomSheetModalRef}
             index={1}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}>
-            <View>
-              <View style={styles.chip}>
-                <Text>status: "{status}"</Text>
+            <BottomSheetScrollView>
+              <Text style={styles.responseTitle}>Resultado da operação</Text>
+              <View style={styles.mindsSDKBody}>
+                <Text style={{ color: '#17CEAB' }}>{mindsSDKResponse}</Text>
               </View>
-              <View style={styles.chip}>
-                <Text>confidence: "{confidence}"</Text>
-              </View>
-              <View style={styles.chip}>
-                <Text>match: "{match}"</Text>
-              </View>
-            </View>
-            <Text style={styles.responseTitle}>Lorem ipsum dolor</Text>
-            <Text style={styles.responseDescription}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Ut
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip.
-            </Text>
-            <View style={styles.mindsSDKBody}>
-              <Text style={{color: '#17CEAB'}}>{mindsSDKResponse}</Text>
-            </View>
+            </BottomSheetScrollView>
           </BottomSheetModal>
         </View>
       </BottomSheetModalProvider>
@@ -221,14 +218,6 @@ const styles = StyleSheet.create({
     color: '#242424',
     margin: 16,
   },
-  responseDescription: {
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 22,
-    color: '#242424',
-    margin: 16,
-  },
 
   mindsSDKBody: {
     color: '#17CEAB',
@@ -237,15 +226,7 @@ const styles = StyleSheet.create({
     padding: 30,
     margin: 16,
   },
-  chip: {
-    alignSelf: 'flex-start',
-    marginLeft: 16,
-    marginBottom: 8,
-    borderRadius: 30,
-    backgroundColor: '#D1F5EE',
-    fontSize: 8,
-    padding: 8,
-  },
+
 });
 
 export default App;

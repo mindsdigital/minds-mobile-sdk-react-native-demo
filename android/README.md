@@ -1,6 +1,6 @@
 ### Primeiros passos
 
-Os primeiros passos é adicionar a MindsSDK no projeto Android do React Native, seguindo a documentação do projeto Android em <https://staging-api.minds.digital/docs/sdk/android/visao_geral>
+Os primeiros passos é adicionar a MindsSDK no projeto Android do React Native, seguindo a documentação do projeto Android em <https://sandbox-api.minds.digital/docs/sdk/android/visao_geral>
 
 ### Criar arquivo MindsConfigJava.kt
 

@@ -1,7 +1,7 @@
 
 ### Primeiros passos
 
-Os primeiros passos é adicionar a MindsSDK no projeto iOS do React Native, seguindo a documentação do projeto iOS em <https://staging-api.minds.digital/docs/sdk/ios/visao_geral>
+Os primeiros passos é adicionar a MindsSDK no projeto iOS do React Native, seguindo a documentação do projeto iOS em <https://sandbox-api.minds.digital/docs/sdk/ios/visao_geral>
 
 ## Configure o Info.plist
 
