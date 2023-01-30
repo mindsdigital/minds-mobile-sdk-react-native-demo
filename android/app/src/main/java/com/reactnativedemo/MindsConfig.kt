@@ -14,7 +14,7 @@ object MindsConfigJava {
             .build()
     }
 
-    fun verification(cpf: String, phone: String, token: String): MindsSDK {
+    fun authentication(cpf: String, phone: String, token: String): MindsSDK {
         return MindsSDK.Builder()
             .setToken(token)
             .setCPF(cpf)

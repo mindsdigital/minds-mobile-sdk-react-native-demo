@@ -114,7 +114,7 @@ const App = () => {
                       return;
                     }
                     setDisableVerification(true);
-                    MindsDigitalModule.verification(
+                    MindsDigitalModule.authentication(
                       cpf,
                       phone,
                       (response: string) => {

@@ -10,7 +10,7 @@ interface MindsDigitalInterface {
     phone: string,
     callback: (response: string) => void,
   ): void;
-  verification(
+  authentication(
     cpf: string,
     phone: string,
     callback: (response: string) => void,
