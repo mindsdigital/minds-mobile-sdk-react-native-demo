@@ -234,7 +234,7 @@ interface MindsDigitalInterface {
 
 export default MindsDigitalModule as MindsDigitalInterface;
 ```
-Exemplo de classe que pode ser criada para mapear no react native
+Exemplo de classe que pode ser criada para mapear o JSON 
 
 ```javascript
 interface VoiceMatchResponse {
