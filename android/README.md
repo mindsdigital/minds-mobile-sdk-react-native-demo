@@ -7,29 +7,24 @@ Os primeiros passos é adicionar a MindsSDK no projeto Android do React Native, 
 Em seguida deve ser criado o arquivo MindsConfigJava.kt
 
 ```kotlin
-package com.reactnativedemo
-
-import digital.minds.clients.sdk.kotlin.domain.helpers.ProcessType
-import digital.minds.clients.sdk.kotlin.main.MindsSDK
-
 object MindsConfigJava {
     fun enrollment(cpf: String, phone: String, token: String): MindsSDK {
         return MindsSDK.Builder()
             .setToken(token)
             .setCPF(cpf)
-            .setExternalID("4")
             .setPhoneNumber(phone)
+            .setShowDetails(true)
             .setProcessType(ProcessType.ENROLLMENT)
             .build()
     }
 
-    fun verification(cpf: String, phone: String, token: String): MindsSDK {
+    fun authentication(cpf: String, phone: String, token: String): MindsSDK {
         return MindsSDK.Builder()
             .setToken(token)
             .setCPF(cpf)
-            .setExternalID("4")
             .setPhoneNumber(phone)
-            .setProcessType(ProcessType.VERIFICATION)
+            .setShowDetails(true)
+            .setProcessType(ProcessType.AUTHENTICATION)
             .build()
     }
 }
