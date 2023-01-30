@@ -86,9 +86,9 @@ class MindsDigitalModule internal constructor(context: ReactApplicationContext?)
     }
 
     @ReactMethod
-    fun verification(cpf: String, phone: String, verificationCallback: Callback) {
-        callback = verificationCallback
-        val verificationMindsSDK = MindsConfigJava.verification(
+    fun authentication(cpf: String, phone: String, authenticationCallback: Callback) {
+        callback = authenticationCallback
+        val authenticationMindsSDK = MindsConfigJava.authentication(
             cpf,
             phone,
             BuildConfig.MINDS_DIGITAL_TOKEN
@@ -98,7 +98,7 @@ class MindsDigitalModule internal constructor(context: ReactApplicationContext?)
                 try {
                     val i = MindsDigital.getIntent(
                         currentActivity!!.applicationContext,
-                        verificationMindsSDK
+                        authenticationMindsSDK
                     )
                     currentActivity?.startActivityForResult(i, 0)
                 } catch (e: Exception) {
