@@ -225,7 +225,7 @@ interface MindsDigitalInterface {
     phone: string,
     callback: (jsonString: string) => void,
   ): void;
-  verification(
+  authentication(
     cpf: string,
     phone: string,
     callback: (response: string) => void,
