@@ -228,7 +228,7 @@ interface MindsDigitalInterface {
   authentication(
     cpf: string,
     phone: string,
-    callback: (response: string) => void,
+    callback: (jsonString: string) => void,
   ): void;
 }
 
