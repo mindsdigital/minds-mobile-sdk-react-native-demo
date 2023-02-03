@@ -13,7 +13,7 @@ import AVFAudio
 @objc(MindsDigital)
 class MindsDigital: NSObject {
   
-  var sdk = MindsSDK.shared
+  var sdk: MindsSDK?
   var rnCallback: RCTResponseSenderBlock?
   var navigationController: UINavigationController?
 
@@ -22,38 +22,39 @@ class MindsDigital: NSObject {
     navigationController = uiNavigationController
 
     DispatchQueue.main.async { [self] in
-      self.sdk.token = ""
-      self.sdk.setExternalId("4")
-      self.sdk.setPhoneNumber(phone)
-      self.sdk.setCpf(cpf)
-      self.sdk.setProcessType(processType: MindsSDK.ProcessType.enrollment)
-
-      let sdkInitializer = MindsSDKInitializer()
+      sdk = MindsSDK()
+      sdk?.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWNyZXRfNjBfYXBpIiwiY29tcGFueV9pZCI6NjB9.rxePCNyDUZWELHZj49s_oki8StezhADQVeId39NwMV4")
+      sdk?.setExternalId(nil)
+      sdk?.setExternalCustomerId(nil)
+      sdk?.setPhoneNumber(phone)
+      sdk?.setShowDetails(true)
+      sdk?.setCpf(cpf)
+      sdk?.setProcessType(MindsSDK.ProcessType.enrollment)
       
-      sdkInitializer.initialize(on: uiNavigationController, delegate: self) { error in
+      sdk?.initialize(on: uiNavigationController) { error in
         if let error = error {
             print("-- error: \(error)")
         }
       }
-      
     }
   }
   
-  @objc func verification(_ uiNavigationController: UINavigationController, cpf: String, phone: String, callback: @escaping RCTResponseSenderBlock) {
+  @objc func authentication(_ uiNavigationController: UINavigationController, cpf: String, phone: String, callback: @escaping RCTResponseSenderBlock) {
     
     rnCallback = callback;
     navigationController = uiNavigationController
 
     DispatchQueue.main.async { [self] in
-      self.sdk.token = ""
-      self.sdk.setExternalId("4")
-      self.sdk.setPhoneNumber(phone)
-      self.sdk.setCpf(cpf)
-      self.sdk.setProcessType(processType: MindsSDK.ProcessType.verification)
-
-      let sdkInitializer = MindsSDKInitializer()
+      sdk = MindsSDK()
+      sdk?.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWNyZXRfNjBfYXBpIiwiY29tcGFueV9pZCI6NjB9.rxePCNyDUZWELHZj49s_oki8StezhADQVeId39NwMV4")
+      sdk?.setExternalId(nil)
+      sdk?.setExternalCustomerId(nil)
+      sdk?.setPhoneNumber(phone)
+      sdk?.setShowDetails(true)
+      sdk?.setCpf(cpf)
+      sdk?.setProcessType(MindsSDK.ProcessType.authentication)
       
-      sdkInitializer.initialize(on: uiNavigationController, delegate: self) { error in
+      sdk?.initialize(on: uiNavigationController) { error in
         if let error = error {
             print("-- error: \(error)")
         }
@@ -64,26 +65,39 @@ class MindsDigital: NSObject {
   }
   
   private func biometricsReceive(_ response: BiometricResponse) {
-    var status = response.status
-    if (status == "invalid_length") {
-       status = "invalid_length_exception"
-    }
-    
-    rnCallback?([[
-      "status": response.status as Any,
-      "confidence": response.confidence as Any,
-      "match_prediction": response.matchPrediction as Any,
-      "success": response.success as Any,
-      "message": response.message as Any,
-      "external_id": response.externalId as Any,
-      "cpf": response.cpf as Any,
-      "verification_id": response.verificationID as Any,
-      "action": response.action as Any,
-      "whitelisted": response.whitelisted as Any,
-      "fraud_risk": response.fraudRisk as Any,
-      "enrollment_external_id": response.enrollmentExternalId as Any,
-        ]])
-    
+        let json: [String: Any?] = [
+            "success": response.success,
+                "error": [
+                    "code": response.error?.code,
+                    "description": response.error?.description
+                ],
+            "id": response.id,
+            "cpf": response.cpf,
+            "external_id": response.externalID,
+            "created_at": response.createdAt,
+                "result": [
+                    "recommended_action": response.result?.recommendedAction as Any,
+                    "reasons": response.result?.reasons as Any
+                ],
+                "details": [
+                    "flag": [
+                        "id": response.details?.flag?.id as Any ,
+                        "type": response.details?.flag?.type as Any,
+                        "description": response.details?.flag?.description as Any,
+                        "status": response.details?.flag?.status as Any
+                    ],
+                    "voice_match": [
+                        "result": response.details?.voiceMatch?.result as Any,
+                        "confidence": response.details?.voiceMatch?.confidence as Any,
+                        "status": response.details?.voiceMatch?.status as Any
+                    ]
+                ]
+        ]
+        if let jsonData = try? JSONSerialization.data(withJSONObject: json),
+            let jsonString = String(data: jsonData, encoding: .utf8) {
+            print(jsonString)
+            rnCallback?([jsonString])
+        }
   }
   
 }
@@ -107,4 +121,5 @@ extension MindsDigital: MindsSDKDelegate {
     self.biometricsReceive(response)
   }
 }
+
 

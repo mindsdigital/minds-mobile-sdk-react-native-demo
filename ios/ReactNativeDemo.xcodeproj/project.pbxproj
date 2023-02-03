@@ -11,11 +11,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		666ED28E2964641D00CAD20C /* minds-sdk-mobile-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 666ED28D2964641D00CAD20C /* minds-sdk-mobile-ios */; };
 		669B4EDB29631BC900445529 /* RCTMindsDigitalModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 669B4EDA29631BC900445529 /* RCTMindsDigitalModule.m */; };
 		669B4EDF29631E3100445529 /* MindsDigital.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669B4EDE29631E3100445529 /* MindsDigital.swift */; };
 		669B4EE029631E3100445529 /* MindsDigital.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669B4EDE29631E3100445529 /* MindsDigital.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		81F9C3AB298AEC17005D0C80 /* minds-sdk-mobile-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 81F9C3AA298AEC17005D0C80 /* minds-sdk-mobile-ios */; };
 		B76CD87D3E1C1334CCC46BEF /* libPods-ReactNativeDemo-ReactNativeDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03201BE9BF20A2E592D3A340 /* libPods-ReactNativeDemo-ReactNativeDemoTests.a */; };
 		E149AF1ABDA6B7D4A2095087 /* libPods-ReactNativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D233B7BAD8DA378BD06A535 /* libPods-ReactNativeDemo.a */; };
 /* End PBXBuildFile section */
@@ -44,7 +44,6 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactNativeDemo/main.m; sourceTree = "<group>"; };
 		1A2777BB1B99C617642F3080 /* Pods-ReactNativeDemo-ReactNativeDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo-ReactNativeDemoTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo-ReactNativeDemoTests/Pods-ReactNativeDemo-ReactNativeDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		1BE4C3932F4EAB1AAD201405 /* Pods-ReactNativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo/Pods-ReactNativeDemo.release.xcconfig"; sourceTree = "<group>"; };
-		666ED28C296463D800CAD20C /* minds-sdk-mobile-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "minds-sdk-mobile-ios"; path = "../../minds-sdk-mobile-ios"; sourceTree = "<group>"; };
 		669B4ED929631B5600445529 /* RCTMindsDigitalModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTMindsDigitalModule.h; sourceTree = "<group>"; };
 		669B4EDA29631BC900445529 /* RCTMindsDigitalModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTMindsDigitalModule.m; sourceTree = "<group>"; };
 		669B4EDC29631E3100445529 /* ReactNativeDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeDemo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -52,6 +51,7 @@
 		669B4EDE29631E3100445529 /* MindsDigital.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindsDigital.swift; sourceTree = "<group>"; };
 		7D233B7BAD8DA378BD06A535 /* libPods-ReactNativeDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeDemo/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81F9C3A9298AEC05005D0C80 /* minds-sdk-mobile-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "minds-sdk-mobile-ios"; path = "../../minds-sdk-mobile-ios"; sourceTree = "<group>"; };
 		C258B911A44C4AB14B7519AC /* Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo-ReactNativeDemoTests/Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -70,7 +70,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E149AF1ABDA6B7D4A2095087 /* libPods-ReactNativeDemo.a in Frameworks */,
-				666ED28E2964641D00CAD20C /* minds-sdk-mobile-ios in Frameworks */,
+				81F9C3AB298AEC17005D0C80 /* minds-sdk-mobile-ios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +125,7 @@
 		669B4EE12963214400445529 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				666ED28C296463D800CAD20C /* minds-sdk-mobile-ios */,
+				81F9C3A9298AEC05005D0C80 /* minds-sdk-mobile-ios */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -216,7 +216,7 @@
 			);
 			name = ReactNativeDemo;
 			packageProductDependencies = (
-				666ED28D2964641D00CAD20C /* minds-sdk-mobile-ios */,
+				81F9C3AA298AEC17005D0C80 /* minds-sdk-mobile-ios */,
 			);
 			productName = ReactNativeDemo;
 			productReference = 13B07F961A680F5B00A75B9A /* ReactNativeDemo.app */;
@@ -746,7 +746,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		666ED28D2964641D00CAD20C /* minds-sdk-mobile-ios */ = {
+		81F9C3AA298AEC17005D0C80 /* minds-sdk-mobile-ios */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "minds-sdk-mobile-ios";
 		};
