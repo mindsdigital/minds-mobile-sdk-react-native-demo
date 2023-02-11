@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import minds_sdk_mobile_ios
+import MindsSDK
 import AVFAudio
 
 @objc(MindsDigital)
@@ -22,7 +22,7 @@ class MindsDigital: NSObject {
     navigationController = uiNavigationController
 
     DispatchQueue.main.async { [self] in
-      sdk = MindsSDK()
+      sdk = MindsSDK(delegate: self)
       sdk?.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWNyZXRfNjBfYXBpIiwiY29tcGFueV9pZCI6NjB9.rxePCNyDUZWELHZj49s_oki8StezhADQVeId39NwMV4")
       sdk?.setExternalId(nil)
       sdk?.setExternalCustomerId(nil)
@@ -45,7 +45,7 @@ class MindsDigital: NSObject {
     navigationController = uiNavigationController
 
     DispatchQueue.main.async { [self] in
-      sdk = MindsSDK()
+      sdk = MindsSDK(delegate: self)
       sdk?.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWNyZXRfNjBfYXBpIiwiY29tcGFueV9pZCI6NjB9.rxePCNyDUZWELHZj49s_oki8StezhADQVeId39NwMV4")
       sdk?.setExternalId(nil)
       sdk?.setExternalCustomerId(nil)

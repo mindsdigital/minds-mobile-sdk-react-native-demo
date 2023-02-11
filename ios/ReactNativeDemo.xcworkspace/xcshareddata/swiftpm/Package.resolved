@@ -36,6 +36,15 @@
           "revision": "11f1887767cbc87c4b64b789ee830b779cc744cb",
           "version": "0.8.4"
         }
+      },
+      {
+        "package": "SwiftOGG",
+        "repositoryURL": "https://github.com/mindsdigital/swift-ogg",
+        "state": {
+          "branch": "main",
+          "revision": "e9a9e7601da662fd8b97d93781ff5c60b4becf88",
+          "version": null
+        }
       }
     ]
   },
