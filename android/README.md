@@ -277,7 +277,7 @@ interface VoiceMatch {
 }
 ```
 
-Chame os métodos enrollment ou verification do `MindsDigitalModule` criado.
+Chame os métodos enrollment ou authentication do `MindsDigitalModule` criado.
 
 ```javascript
 <Button
