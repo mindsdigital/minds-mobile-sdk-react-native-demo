@@ -21,6 +21,7 @@
 // To export a module named RCTMindsDigitalModule
 RCT_EXPORT_MODULE();
 
+
 RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone enrollmentCallback:(RCTResponseSenderBlock)enrollmentCallback)
 {
  
@@ -35,7 +36,7 @@ RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone enrollmentC
   });
 }
 
-RCT_EXPORT_METHOD(verification:(NSString *)cpf phone:(NSString *)phone verificationCallback:(RCTResponseSenderBlock)verificationCallback)
+RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone verificationCallback:(RCTResponseSenderBlock)verificationCallback)
 {
   MindsDigital *mindsDigital = [[MindsDigital alloc] init];
   
@@ -43,10 +44,11 @@ RCT_EXPORT_METHOD(verification:(NSString *)cpf phone:(NSString *)phone verificat
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
  
-    [mindsDigital verification:delegate.navController cpf:cpf phone:phone callback:verificationCallback];
+    [mindsDigital authentication:delegate.navController cpf:cpf phone:phone callback:verificationCallback];
 
   });
 }
 
 @end
+
 
