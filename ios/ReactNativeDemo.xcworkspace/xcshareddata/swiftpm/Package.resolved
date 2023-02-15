@@ -1,52 +1,59 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Alamofire",
-        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
-        "state": {
-          "branch": null,
-          "revision": "78424be314842833c04bc3bef5b72e85fff99204",
-          "version": "5.6.4"
-        }
-      },
-      {
-        "package": "Lottie",
-        "repositoryURL": "https://github.com/airbnb/lottie-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "b4bd0604ded9574807f41b4004b57dd1226a30a4",
-          "version": "3.5.0"
-        }
-      },
-      {
-        "package": "YbridOgg",
-        "repositoryURL": "https://github.com/vector-im/ogg-swift.git",
-        "state": {
-          "branch": null,
-          "revision": "9d82ed838404f10b607a1a1689f404563e9115c3",
-          "version": "0.8.3"
-        }
-      },
-      {
-        "package": "YbridOpus",
-        "repositoryURL": "https://github.com/vector-im/opus-swift",
-        "state": {
-          "branch": null,
-          "revision": "11f1887767cbc87c4b64b789ee830b779cc744cb",
-          "version": "0.8.4"
-        }
-      },
-      {
-        "package": "SwiftOGG",
-        "repositoryURL": "https://github.com/mindsdigital/swift-ogg",
-        "state": {
-          "branch": "main",
-          "revision": "e9a9e7601da662fd8b97d93781ff5c60b4becf88",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "78424be314842833c04bc3bef5b72e85fff99204",
+        "version" : "5.6.4"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-ios.git",
+      "state" : {
+        "revision" : "b4bd0604ded9574807f41b4004b57dd1226a30a4",
+        "version" : "3.5.0"
+      }
+    },
+    {
+      "identity" : "minds-sdk-mobile-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mindsdigital/minds-sdk-mobile-ios",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2e0a51b38570c1d09947bb97077584267421b4ec"
+      }
+    },
+    {
+      "identity" : "ogg-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vector-im/ogg-swift.git",
+      "state" : {
+        "revision" : "9d82ed838404f10b607a1a1689f404563e9115c3",
+        "version" : "0.8.3"
+      }
+    },
+    {
+      "identity" : "opus-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vector-im/opus-swift",
+      "state" : {
+        "revision" : "11f1887767cbc87c4b64b789ee830b779cc744cb",
+        "version" : "0.8.4"
+      }
+    },
+    {
+      "identity" : "swift-ogg",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mindsdigital/swift-ogg",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e9a9e7601da662fd8b97d93781ff5c60b4becf88"
+      }
+    }
+  ],
+  "version" : 2
 }
