@@ -36,7 +36,7 @@ RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone enrollmentC
   });
 }
 
-RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone verificationCallback:(RCTResponseSenderBlock)verificationCallback)
+RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone authenticationCallback:(RCTResponseSenderBlock)authenticationCallback)
 {
   MindsDigital *mindsDigital = [[MindsDigital alloc] init];
   
@@ -44,7 +44,7 @@ RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone verific
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
  
-    [mindsDigital authentication:delegate.navController cpf:cpf phone:phone callback:verificationCallback];
+    [mindsDigital authentication:delegate.navController cpf:cpf phone:phone callback:authenticationCallback];
 
   });
 }
