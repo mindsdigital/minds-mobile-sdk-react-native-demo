@@ -310,8 +310,8 @@ dependencies {
 
     implementation project(':react-native-vector-icons')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation 'digital.minds.clients.sdk.android:sandbox:1.16.14'
-    implementation 'digital.minds.clients.sdk.kotlin.core:sandbox:1.0.9'
+    implementation 'digital.minds.clients.sdk.android:sandbox:1.16.15'
+    implementation 'digital.minds.clients.sdk.kotlin.core:sandbox:1.0.10'
 }
 
 if (isNewArchitectureEnabled()) {
