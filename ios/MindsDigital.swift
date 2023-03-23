@@ -23,13 +23,14 @@ class MindsDigital: NSObject {
 
     DispatchQueue.main.async { [self] in
       sdk = MindsSDK(delegate: self)
-      sdk?.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWNyZXRfNjBfYXBpIiwiY29tcGFueV9pZCI6NjB9.rxePCNyDUZWELHZj49s_oki8StezhADQVeId39NwMV4")
+      sdk?.setToken("token")
       sdk?.setExternalId(nil)
       sdk?.setExternalCustomerId(nil)
       sdk?.setPhoneNumber(phone)
       sdk?.setShowDetails(true)
       sdk?.setCpf(cpf)
       sdk?.setProcessType(MindsSDK.ProcessType.enrollment)
+      sdk?.setEnvironment(.sandbox)
       
       sdk?.initialize(on: uiNavigationController) { error in
         if let error = error {
@@ -46,13 +47,14 @@ class MindsDigital: NSObject {
 
     DispatchQueue.main.async { [self] in
       sdk = MindsSDK(delegate: self)
-      sdk?.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWNyZXRfNjBfYXBpIiwiY29tcGFueV9pZCI6NjB9.rxePCNyDUZWELHZj49s_oki8StezhADQVeId39NwMV4")
+      sdk?.setToken("token")
       sdk?.setExternalId(nil)
       sdk?.setExternalCustomerId(nil)
       sdk?.setPhoneNumber(phone)
       sdk?.setShowDetails(true)
       sdk?.setCpf(cpf)
       sdk?.setProcessType(MindsSDK.ProcessType.authentication)
+      sdk?.setEnvironment(.sandbox)
       
       sdk?.initialize(on: uiNavigationController) { error in
         if let error = error {
