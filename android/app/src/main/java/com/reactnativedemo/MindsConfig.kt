@@ -1,5 +1,6 @@
 package com.reactnativedemo
 
+import digital.minds.clients.sdk.kotlin.domain.helpers.Environment
 import digital.minds.clients.sdk.kotlin.domain.helpers.ProcessType
 import digital.minds.clients.sdk.kotlin.main.MindsSDK
 
@@ -11,6 +12,7 @@ object MindsConfigJava {
             .setPhoneNumber(phone)
             .setShowDetails(true)
             .setProcessType(ProcessType.ENROLLMENT)
+            .setEnvironment(Environment.SANDBOX)
             .build()
     }
 
@@ -21,6 +23,7 @@ object MindsConfigJava {
             .setPhoneNumber(phone)
             .setShowDetails(true)
             .setProcessType(ProcessType.AUTHENTICATION)
+            .setEnvironment(Environment.SANDBOX)
             .build()
     }
 }

@@ -24,7 +24,7 @@
       "location" : "https://github.com/mindsdigital/minds-sdk-mobile-ios",
       "state" : {
         "branch" : "main",
-        "revision" : "2e0a51b38570c1d09947bb97077584267421b4ec"
+        "revision" : "b822951f348fa4917d42584a9ef53e912edf90e4"
       }
     },
     {
@@ -43,6 +43,15 @@
       "state" : {
         "revision" : "11f1887767cbc87c4b64b789ee830b779cc744cb",
         "version" : "0.8.4"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa",
+      "state" : {
+        "revision" : "3fc79ea6ebcfd726e48bea1d98f89bc3a32d5cf2",
+        "version" : "8.3.2"
       }
     },
     {
