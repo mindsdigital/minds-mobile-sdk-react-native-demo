@@ -15,6 +15,7 @@ object MindsConfigJava {
             .setPhoneNumber(phone)
             .setShowDetails(true)
             .setProcessType(ProcessType.ENROLLMENT)
+            .setEnvironment(Environment.PRODUCTION)
             .build()
     }
 
@@ -25,6 +26,7 @@ object MindsConfigJava {
             .setPhoneNumber(phone)
             .setShowDetails(true)
             .setProcessType(ProcessType.AUTHENTICATION)
+            .setEnvironment(Environment.PRODUCTION)
             .build()
     }
 }
