@@ -55,6 +55,7 @@ class MindsDigital: NSObject {
       sdk?.setShowDetails(true)
       sdk?.setCpf(cpf)
       sdk?.setProcessType(MindsSDK.ProcessType.enrollment)
+      sdk?.setEnvironment(.production)
       
       sdk?.initialize(on: uiNavigationController) { error in
         if let error = error {
@@ -78,6 +79,7 @@ class MindsDigital: NSObject {
       sdk?.setShowDetails(true)
       sdk?.setCpf(cpf)
       sdk?.setProcessType(MindsSDK.ProcessType.authentication)
+      sdk?.setEnvironment(.production)
       
       sdk?.initialize(on: uiNavigationController) { error in
         if let error = error {
