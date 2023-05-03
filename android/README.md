@@ -297,3 +297,8 @@ Chame os métodos enrollment ou authentication do `MindsDigitalModule` criado.
     }
     />
 ```
+
+## 📌 Observação
+
+É importante ressaltar que o integrador deve garantir que a permissão do microfone seja fornecida em seu aplicativo Flutter antes de utilizar a SDK. Sem essa permissão, a SDK não funcionará corretamente. É responsabilidade do integrador garantir que seu aplicativo tenha as permissões necessárias para utilizar a SDK com sucesso.
+
