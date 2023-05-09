@@ -297,21 +297,16 @@ interface VoiceMatch {
 ```
 
 Chame os métodos enrollment ou authentication do `MindsDigitalModule` criado.
-
 ```javascript
 <Button
     title="Autenticação por voz"
     color="#141540"
     onPress={() =>
-        MindsDigitalModule.authentication(
-        cpf,
-        phone,
-        (response: jsonString) => {
-            let json = JSON.parse(jsonString)
-            console.log(json);
-        },
-        )
-    }
+const response = await MindsDigitalModule.authentication(
+    cpf,
+    phone,
+  );
+ }
     />
 ```
 
