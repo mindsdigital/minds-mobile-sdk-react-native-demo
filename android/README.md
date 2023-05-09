@@ -302,12 +302,12 @@ Chame os métodos enrollment ou authentication do `MindsDigitalModule` criado.
     title="Autenticação por voz"
     color="#141540"
     onPress={() =>
-const response = await MindsDigitalModule.authentication(
+    const response = await MindsDigitalModule.authentication(
     cpf,
     phone,
   );
  }
-    />
+/>
 ```
 
 ## 📌 Observação
