@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.5",
-    "react": "18.1.0",
-    "react-native": "0.70.3",
-    "react-native-gesture-handler": "^2.8.0",
+    "react": "18.2.0",
+    "react-native": "0.71.7",
+    "react-native-gesture-handler": "^2.9.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-masked-text": "^1.13.0",
     "react-native-reanimated": "^2.12.0",

@@ -8,13 +8,11 @@ interface MindsDigitalInterface {
   enrollment(
     cpf: string,
     phone: string,
-    callback: (response: string) => void,
-  ): void;
+  ): Promise<string>;
   authentication(
     cpf: string,
     phone: string,
-    callback: (response: string) => void,
-  ): void;
+  ): Promise<string>;
 }
 
 export default MindsDigitalModule as MindsDigitalInterface;
