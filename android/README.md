@@ -37,78 +37,97 @@ O próximo passo é criar o arquivo em Kotlin MindsDigitalModule.kt dentro da pa
 
 ```kotlin
 package com.reactnativedemo
-
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat.startActivityForResult
 import com.facebook.react.bridge.*
 import digital.minds.clients.sdk.android.MindsDigital
 import digital.minds.clients.sdk.kotlin.data.model.VoiceMatchResponse
-import digital.minds.clients.sdk.kotlin.domain.constants.LOG_TAG
 import digital.minds.clients.sdk.kotlin.domain.constants.VOICE_MATCH_RESPONSE
+import digital.minds.clients.sdk.kotlin.domain.exceptions.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 
 class MindsDigitalModule internal constructor(context: ReactApplicationContext?) :
     ReactContextBaseJavaModule(context), ActivityEventListener {
 
-    private lateinit var callback: Callback
+    private lateinit var promisseResult: Promise
 
     init {
         context?.addActivityEventListener(this)
     }
 
     @ReactMethod
-    fun enrollment(cpf: String, phone: String, enrollmentCallback: Callback) {
-        callback = enrollmentCallback
-        val enrollmentMindsSDK = MindsConfigJava.enrollment(
-            cpf,
-            phone,
-            BuildConfig.MINDS_DIGITAL_TOKEN
-        )
+    fun enrollment(cpf: String, phone: String, enrollmentPromisse: Promise) {
+        promisseResult = enrollmentPromisse
         try {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val i = MindsDigital.getIntent(
-                        currentActivity!!.applicationContext,
-                        enrollmentMindsSDK
+                    val enrollmentMindsSDK = MindsConfigJava.enrollment(
+                        cpf,
+                        phone,
+                        BuildConfig.MINDS_DIGITAL_TOKEN
                     )
-                    currentActivity?.startActivityForResult(i, 0)
+                    val intent = MindsDigital.getIntent(currentActivity!!.applicationContext, enrollmentMindsSDK)
+                    currentActivity?.startActivityForResult(intent, 0)
+                } catch (e: InvalidCPF) {
+                    promisseResult.reject(e.message, "invalid_cpf")
+                } catch (e: InvalidPhoneNumber) {
+                    promisseResult.reject(e.message, "invalid_phone_number")
+                } catch (e: CustomerNotFoundToPerformVerification) {
+                    promisseResult.reject(e.message, "customer_not_found")
+                } catch (e: CustomerNotEnrolled) {
+                    promisseResult.reject(e.message, "customer_not_enrolled")
+                } catch (e: CustomerNotCertified) {
+                    promisseResult.reject(e.message, "customer_not_certified")
+                } catch (e: InvalidToken) {
+                    promisseResult.reject(e.message, "invalid_token")
+                } catch (e: InternalServerException) {
+                    promisseResult.reject(e.message, "internal_server_error")
                 } catch (e: Exception) {
-                    callback.invoke(e.toString())
+                    promisseResult.reject(e.message, "MINDS_SDK_INIT_ERROR")
                 }
             }
         } catch (e: Exception) {
-            callback.invoke(e.toString())
+            promisseResult.reject(e.message, "MINDS_SDK_INIT_ERROR")
         }
     }
 
     @ReactMethod
-    fun authentication(cpf: String, phone: String, authenticationCallback: Callback) {
-        callback = authenticationCallback
-        val authenticationMindsSDK = MindsConfigJava.authentication(
-            cpf,
-            phone,
-            BuildConfig.MINDS_DIGITAL_TOKEN
-        )
+    fun authentication(cpf: String, phone: String, authenticationPromisse: Promise) {
+        promisseResult = authenticationPromisse
         try {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val i = MindsDigital.getIntent(
-                        currentActivity!!.applicationContext,
-                        authenticationMindsSDK
+                    val authenticationMindsSDK = MindsConfigJava.authentication(
+                        cpf,
+                        phone,
+                        BuildConfig.MINDS_DIGITAL_TOKEN
                     )
-                    currentActivity?.startActivityForResult(i, 0)
+                    val intent = MindsDigital.getIntent(currentActivity!!.applicationContext, authenticationMindsSDK)
+                    currentActivity?.startActivityForResult(intent, 0)
+                } catch (e: InvalidCPF) {
+                    promisseResult.reject(e.message, "invalid_cpf")
+                } catch (e: InvalidPhoneNumber) {
+                    promisseResult.reject(e.message, "invalid_phone_number")
+                } catch (e: CustomerNotFoundToPerformVerification) {
+                    promisseResult.reject(e.message, "customer_not_found")
+                } catch (e: CustomerNotEnrolled) {
+                    promisseResult.reject(e.message, "customer_not_enrolled")
+                } catch (e: CustomerNotCertified) {
+                    promisseResult.reject(e.message, "customer_not_certified")
+                } catch (e: InvalidToken) {
+                    promisseResult.reject(e.message, "invalid_token")
+                } catch (e: InternalServerException) {
+                    promisseResult.reject(e.message, "internal_server_error")
                 } catch (e: Exception) {
-                    callback.invoke(e.toString())
+                    promisseResult.reject(e.message, "MINDS_SDK_INIT_ERROR")
                 }
             }
         } catch (e: Exception) {
-            callback.invoke(e.toString())
+            promisseResult.reject(e.message, "MINDS_SDK_INIT_ERROR")
         }
     }
 
@@ -123,7 +142,7 @@ class MindsDigitalModule internal constructor(context: ReactApplicationContext?)
         data: Intent?
     ) {
         val mindsSDKResponse = data?.extras?.get(VOICE_MATCH_RESPONSE) as VoiceMatchResponse
-
+        val reactNativeResponse: WritableMap = Arguments.createMap()
         val jsonObject = JSONObject()
         jsonObject.put("success", mindsSDKResponse.success)
         jsonObject.put("error", JSONObject().apply {
@@ -154,7 +173,7 @@ class MindsDigitalModule internal constructor(context: ReactApplicationContext?)
 
         val jsonString = jsonObject.toString()
 
-        callback.invoke(jsonString)
+        promisseResult.resolve(jsonString)
     }
 
     override fun onNewIntent(p0: Intent?) {}
@@ -225,13 +244,11 @@ interface MindsDigitalInterface {
   enrollment(
     cpf: string,
     phone: string,
-    callback: (jsonString: string) => void,
-  ): void;
+  ): Promise<string>;
   authentication(
     cpf: string,
     phone: string,
-    callback: (jsonString: string) => void,
-  ): void;
+  ): Promise<string>;
 }
 
 export default MindsDigitalModule as MindsDigitalInterface;
