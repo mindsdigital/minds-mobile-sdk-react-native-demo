@@ -1,10 +1,3 @@
-//
-//  RCTMindsDigitalModule.m
-//  ReactNativeDemo
-//
-//  Created by Divino Borges on 26/12/22.
-//
-
 #import "RCTMindsDigitalModule.h"
 #import <React/RCTLog.h>
 #import "ReactNativeDemo-Swift.h"
@@ -22,7 +15,7 @@
 RCT_EXPORT_MODULE();
 
 
-RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone enrollmentCallback:(RCTResponseSenderBlock)enrollmentCallback)
+RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
  
   MindsDigital *mindsDigital = [[MindsDigital alloc] init];
@@ -31,12 +24,12 @@ RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone enrollmentC
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
  
-    [mindsDigital enrollment:delegate.navController cpf:cpf phone:phone callback:enrollmentCallback];
+    [mindsDigital enrollment:delegate.navController cpf:cpf phone:phone resolver:resolve reject: reject];
 
   });
 }
 
-RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone authenticationCallback:(RCTResponseSenderBlock)authenticationCallback)
+RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
   MindsDigital *mindsDigital = [[MindsDigital alloc] init];
   
@@ -44,11 +37,9 @@ RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone authent
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
  
-    [mindsDigital authentication:delegate.navController cpf:cpf phone:phone callback:authenticationCallback];
+    [mindsDigital authentication:delegate.navController cpf:cpf phone:phone resolver:resolve reject: reject];
 
   });
 }
 
 @end
-
-

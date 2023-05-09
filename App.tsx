@@ -78,27 +78,31 @@ const App = () => {
                   disabled={disableEnrollment || disableVerification}
                   title="Cadastro por voz"
                   color="#17CEAB"
-                  onPress={() => {
+                  onPress={async () => {
                     if (!cpf || !phone) {
                       Alert.alert("Atenção", "CPF e telefone são obrigatórios");
                       return;
                     }
                     setDisableEnrollment(true);
-                    MindsDigitalModule.enrollment(
-                      cpf,
-                      phone,
-                      (response: string) => {
-                        try {
-                          let jsonString = JSON.parse(response)
-                          setMindsSDKResponse(JSON.stringify(jsonString, null, 4));
-                        } catch (error) {
-                          console.log(response)
-                          setMindsSDKResponse(JSON.stringify(response, null, 4));
-                        }
-                        handlePresentModalPress();
-                        setDisableEnrollment(false);
-                      },
-                    );
+                    try {
+                      const response = await MindsDigitalModule.enrollment(
+                        cpf,
+                        phone,
+                      );
+                      try {
+                        let jsonString = JSON.parse(response)
+                        setMindsSDKResponse(JSON.stringify(jsonString, null, 4));
+                      } catch (error) {
+                        console.log(response)
+                        setMindsSDKResponse(JSON.stringify(response, null, 4));
+                      }
+                      handlePresentModalPress();
+                    } catch (e) {
+                      const result = (e as Error);
+                      Alert.alert(result.toString())
+                    } finally {
+                      setDisableEnrollment(false);
+                    }
                   }}
                 />
               </View>
@@ -108,27 +112,31 @@ const App = () => {
                   disabled={disableVerification || disableEnrollment}
                   title="Autenticação por voz"
                   color="#141540"
-                  onPress={() => {
+                  onPress={async () => {
                     if (!cpf || !phone) {
                       Alert.alert("Atenção", "CPF e telefone são obrigatórios");
                       return;
                     }
                     setDisableVerification(true);
-                    MindsDigitalModule.authentication(
-                      cpf,
-                      phone,
-                      (response: string) => {
-                        try {
-                          let jsonString = JSON.parse(response)
-                          setMindsSDKResponse(JSON.stringify(jsonString, null, 4));
-                        } catch (error) {
-                          console.log(response)
-                          setMindsSDKResponse(JSON.stringify(response, null, 4));
-                        }
-                        handlePresentModalPress();
-                        setDisableVerification(false);
-                      },
-                    );
+                    try {
+                      const response = await MindsDigitalModule.authentication(
+                        cpf,
+                        phone,
+                      );
+                      try {
+                        let jsonString = JSON.parse(response)
+                        setMindsSDKResponse(JSON.stringify(jsonString, null, 4));
+                      } catch (error) {
+                        console.log(response)
+                        setMindsSDKResponse(JSON.stringify(response, null, 4));
+                      }
+                      handlePresentModalPress();
+                    } catch (e) {
+                      const result = (e as Error);
+                      Alert.alert(result.toString())
+                    } finally {
+                      setDisableVerification(false);
+                    }
                   }}
                 />
               </View>
