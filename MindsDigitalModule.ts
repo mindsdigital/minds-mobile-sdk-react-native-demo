@@ -6,11 +6,11 @@ const { MindsDigitalModule } = NativeModules;
 
 interface MindsDigitalInterface {
   enrollment(
-    cpf: string,
+    document: string,
     phone: string,
   ): Promise<string>;
   authentication(
-    cpf: string,
+    document: string,
     phone: string,
   ): Promise<string>;
 }

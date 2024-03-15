@@ -18,32 +18,43 @@ class MindsDigital: NSObject {
   var rejectCallback: RCTPromiseRejectBlock?
   var navigationController: UINavigationController?
   
-  @objc func enrollment(_ uiNavigationController: UINavigationController, cpf: String, phone: String, resolver: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+  func getSDKToken() -> String {
+      if let path = Bundle.main.path(forResource: "AppConfig", ofType: "plist") {
+          if let dictionary = NSDictionary(contentsOfFile: path) {
+              if let sdkToken = dictionary["token"] as? String {
+                  return sdkToken
+              }
+          }
+      }
+      return ""
+  }
+  
+  @objc func enrollment(_ uiNavigationController: UINavigationController, document: String, phone: String, resolver: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     resolveCallback = resolver
     rejectCallback = reject
     navigationController = uiNavigationController
   
-    startSDK(navigationController!, processType: .enrollment, cpf: cpf, token: "Token", telephone: phone, externalId: nil, externalCustomerId: nil)
+    startSDK(navigationController!, processType: .enrollment, document: document, token: getSDKToken(), telephone: phone, externalId: nil, externalCustomerId: nil)
   }
   
-  @objc func authentication(_ uiNavigationController: UINavigationController, cpf: String, phone: String, resolver: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+  @objc func authentication(_ uiNavigationController: UINavigationController, document: String, phone: String, resolver: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     resolveCallback = resolver
     rejectCallback = reject
     navigationController = uiNavigationController
     
-    startSDK(navigationController!, processType: .authentication, cpf: cpf, token: "Token", telephone: phone, externalId: nil, externalCustomerId: nil)
+    startSDK(navigationController!, processType: .authentication, document: document, token: getSDKToken(), telephone: phone, externalId: nil, externalCustomerId: nil)
   }
   
-  private func startSDK(_ uiNavigationController: UINavigationController, processType: MindsSDK.ProcessType, cpf: String, token: String, telephone: String, externalId: String?, externalCustomerId: String?) {
+  private func startSDK(_ uiNavigationController: UINavigationController, processType: MindsSDK.ProcessType, document: String, token: String, telephone: String, externalId: String?, externalCustomerId: String?) {
     sdk = MindsSDK(delegate: self)
     sdk?.setToken(token)
     sdk?.setExternalId(externalId)
     sdk?.setExternalCustomerId(externalCustomerId)
     sdk?.setPhoneNumber(telephone)
     sdk?.setShowDetails(true)
-    sdk?.setCpf(cpf)
+    sdk?.setDocument(document)
     sdk?.setProcessType(processType)
-    sdk?.setEnvironment(.sandbox)
+    sdk?.setEnvironment(.staging)
     
     DispatchQueue.main.async {
             
@@ -52,9 +63,12 @@ class MindsDigital: NSObject {
         if let error = error {
           do {
             throw error
-          } catch DomainError.invalidCPF(let message) {
-            self.rejectCallback?(message!, "invalid_phone_number", nil)
+          } catch DomainError.invalidDocument(let message) {
+            self.rejectCallback?(message!, "invalid_document", nil)
             
+          } catch DomainError.invalidCPF(let message) {
+            self.rejectCallback?(message!, "invalid_cpf", nil)
+      
           } catch DomainError.invalidPhoneNumber(let message) {
             self.rejectCallback?(message!, "invalid_phone_number", nil)
             
@@ -85,33 +99,61 @@ class MindsDigital: NSObject {
     }
   }
   
-  private func biometricsReceive(_ response: BiometricResponse) {
+  private func biometricsReceive(_ response: BiometricResponse?) {
     let json: [String: Any?] = [
-      "success": response.success,
+      "success": response?.success as Any,
       "error": [
-        "code": response.error?.code,
-        "description": response.error?.description
+          "code": response?.error?.code as Any,
+          "description": response?.error?.description as Any
       ],
-      "id": response.id,
-      "cpf": response.cpf,
-      "external_id": response.externalID,
-      "created_at": response.createdAt,
+      "id": response?.id as Any,
+      "cpf": response?.cpf as Any,
+      "external_id": response?.externalID as Any,
+      "created_at": response?.createdAt as Any,
+      "utc_created_at": response?.utcCreatedAt as Any,
       "result": [
-        "recommended_action": response.result?.recommendedAction as Any,
-        "reasons": response.result?.reasons as Any
+          "recommended_action": response?.result?.recommendedAction as Any,
+          "reasons": response?.result?.reasons as Any
       ],
       "details": [
-        "flag": [
-          "id": response.details?.flag?.id as Any ,
-          "type": response.details?.flag?.type as Any,
-          "description": response.details?.flag?.description as Any,
-          "status": response.details?.flag?.status as Any
-        ],
-        "voice_match": [
-          "result": response.details?.voiceMatch?.result as Any,
-          "confidence": response.details?.voiceMatch?.confidence as Any,
-          "status": response.details?.voiceMatch?.status as Any
-        ]
+          "flag": [
+              "type": response?.details?.flag?.type as Any,
+              "status": response?.details?.flag?.status as Any
+          ],
+          "liveness": [
+              "status": response?.details?.liveness?.status as Any,
+              "replay_attack": [
+                  "enabled": response?.details?.liveness?.replayAttack?.enabled as Any,
+                  "status": response?.details?.liveness?.replayAttack?.status as Any,
+                  "result": response?.details?.liveness?.replayAttack?.result as Any,
+                  "confidence": response?.details?.liveness?.replayAttack?.confidence as Any,
+                  "score": response?.details?.liveness?.replayAttack?.score as Any,
+                  "threshold": response?.details?.liveness?.replayAttack?.threshold as Any
+              ],
+              "deepfake": [
+                  "enabled": response?.details?.liveness?.deepFake?.enabled as Any,
+                  "status": response?.details?.liveness?.deepFake?.status as Any,
+                  "result": response?.details?.liveness?.deepFake?.result as Any,
+                  "confidence": response?.details?.liveness?.deepFake?.confidence as Any,
+                  "score": response?.details?.liveness?.deepFake?.score as Any,
+                  "threshold": response?.details?.liveness?.deepFake?.threshold as Any
+              ],
+              "sentence_match": [
+                  "enabled": response?.details?.liveness?.sentenceMatch?.enabled as Any,
+                  "status": response?.details?.liveness?.sentenceMatch?.status as Any,
+                  "result": response?.details?.liveness?.sentenceMatch?.result as Any,
+                  "confidence": response?.details?.liveness?.sentenceMatch?.confidence as Any,
+                  "score": response?.details?.liveness?.sentenceMatch?.score as Any,
+                  "threshold": response?.details?.liveness?.sentenceMatch?.threshold as Any
+              ]
+          ],
+          "voice_match": [
+              "status": response?.details?.voiceMatch?.status as Any,
+              "result": response?.details?.voiceMatch?.result as Any,
+              "confidence": response?.details?.voiceMatch?.confidence as Any,
+              "score": response?.details?.voiceMatch?.score as Any,
+              "threshold": response?.details?.voiceMatch?.threshold as Any
+          ]
       ]
     ]
     if let jsonData = try? JSONSerialization.data(withJSONObject: json),
@@ -133,11 +175,11 @@ extension MindsDigital: MindsSDKDelegate {
     print("microphonePermissionNotGranted")
   }
   
-  func onSuccess(_ response: BiometricResponse) {
+  func onSuccess(_ response: BiometricResponse?) {
     self.biometricsReceive(response)
   }
   
-  func onError(_ response: BiometricResponse) {
+  func onError(_ response: BiometricResponse?) {
     self.biometricsReceive(response)
   }
 }
