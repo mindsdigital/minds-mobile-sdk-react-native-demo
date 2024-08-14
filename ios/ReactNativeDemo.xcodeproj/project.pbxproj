@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,8 +14,9 @@
 		669B4EDB29631BC900445529 /* RCTMindsDigitalModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 669B4EDA29631BC900445529 /* RCTMindsDigitalModule.m */; };
 		669B4EDF29631E3100445529 /* MindsDigital.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669B4EDE29631E3100445529 /* MindsDigital.swift */; };
 		669B4EE029631E3100445529 /* MindsDigital.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669B4EDE29631E3100445529 /* MindsDigital.swift */; };
-		819083B7299D2B29001191D3 /* MindsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 819083B6299D2B29001191D3 /* MindsSDK */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		81D8FAA32B539B510036CD4A /* MindsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 81D8FAA22B539B510036CD4A /* MindsSDK */; };
+		81D8FAA52B53A3AF0036CD4A /* AppConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81D8FAA42B53A3AF0036CD4A /* AppConfig.plist */; };
 		D54CEEAE8CAD420663E09939 /* libPods-ReactNativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EB6F83CBE27E91DD8A864A6 /* libPods-ReactNativeDemo.a */; };
 		D7632674DDFA9F0D1F193FAB /* libPods-ReactNativeDemo-ReactNativeDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 925C0D0E77589104A833040A /* libPods-ReactNativeDemo-ReactNativeDemoTests.a */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		6EB6F83CBE27E91DD8A864A6 /* libPods-ReactNativeDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC40016B5F9B4C166F989B4 /* Pods-ReactNativeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo/Pods-ReactNativeDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeDemo/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81D8FAA42B53A3AF0036CD4A /* AppConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppConfig.plist; sourceTree = "<group>"; };
 		925C0D0E77589104A833040A /* libPods-ReactNativeDemo-ReactNativeDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeDemo-ReactNativeDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4D954D977EBCEC7A7480C82 /* Pods-ReactNativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo/Pods-ReactNativeDemo.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -68,8 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				819083B7299D2B29001191D3 /* MindsSDK in Frameworks */,
 				D54CEEAE8CAD420663E09939 /* libPods-ReactNativeDemo.a in Frameworks */,
+				81D8FAA32B539B510036CD4A /* MindsSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +109,7 @@
 				669B4EDE29631E3100445529 /* MindsDigital.swift */,
 				669B4EDC29631E3100445529 /* ReactNativeDemo-Bridging-Header.h */,
 				669B4EDD29631E3100445529 /* ReactNativeDemoTests-Bridging-Header.h */,
+				81D8FAA42B53A3AF0036CD4A /* AppConfig.plist */,
 			);
 			name = ReactNativeDemo;
 			sourceTree = "<group>";
@@ -214,7 +217,7 @@
 			);
 			name = ReactNativeDemo;
 			packageProductDependencies = (
-				819083B6299D2B29001191D3 /* MindsSDK */,
+				81D8FAA22B539B510036CD4A /* MindsSDK */,
 			);
 			productName = ReactNativeDemo;
 			productReference = 13B07F961A680F5B00A75B9A /* ReactNativeDemo.app */;
@@ -248,7 +251,7 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				819083B5299D2B29001191D3 /* XCRemoteSwiftPackageReference "minds-sdk-mobile-ios" */,
+				81D8FAA12B539B510036CD4A /* XCLocalSwiftPackageReference "../../minds-sdk-mobile-ios" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -272,6 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81D8FAA52B53A3AF0036CD4A /* AppConfig.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -531,7 +535,7 @@
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ReactNativeDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -559,7 +563,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = ReactNativeDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -746,21 +750,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		819083B5299D2B29001191D3 /* XCRemoteSwiftPackageReference "minds-sdk-mobile-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mindsdigital/minds-sdk-mobile-ios";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		81D8FAA12B539B510036CD4A /* XCLocalSwiftPackageReference "../../minds-sdk-mobile-ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../minds-sdk-mobile-ios";
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		819083B6299D2B29001191D3 /* MindsSDK */ = {
+		81D8FAA22B539B510036CD4A /* MindsSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 819083B5299D2B29001191D3 /* XCRemoteSwiftPackageReference "minds-sdk-mobile-ios" */;
 			productName = MindsSDK;
 		};
 /* End XCSwiftPackageProductDependency section */

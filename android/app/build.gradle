@@ -310,9 +310,11 @@ dependencies {
     }
 
     implementation project(':react-native-vector-icons')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation 'digital.minds.clients.sdk.android:release:1.17.5'
-    implementation 'digital.minds.clients.sdk.kotlin.core:release:1.0.16'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//    implementation 'digital.minds.clients.sdk.android:release:1.17.5'
+//    implementation 'digital.minds.clients.sdk.kotlin.core:release:1.0.16'
+    implementation project(path: ':minds-sdk-mobile-android')
+    implementation project(path: ':minds-sdk-mobile-kotlin-core')
 }
 
 if (isNewArchitectureEnabled()) {

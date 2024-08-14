@@ -15,7 +15,7 @@
 RCT_EXPORT_MODULE();
 
 
-RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(enrollment:(NSString *)document phone:(NSString *)phone resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
  
   MindsDigital *mindsDigital = [[MindsDigital alloc] init];
@@ -24,12 +24,12 @@ RCT_EXPORT_METHOD(enrollment:(NSString *)cpf phone:(NSString *)phone resolver:(R
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
  
-    [mindsDigital enrollment:delegate.navController cpf:cpf phone:phone resolver:resolve reject: reject];
+    [mindsDigital enrollment:delegate.navController document:document phone:phone resolver:resolve reject: reject];
 
   });
 }
 
-RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(authentication:(NSString *)document phone:(NSString *)phone resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
   MindsDigital *mindsDigital = [[MindsDigital alloc] init];
   
@@ -37,7 +37,7 @@ RCT_EXPORT_METHOD(authentication:(NSString *)cpf phone:(NSString *)phone resolve
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
  
-    [mindsDigital authentication:delegate.navController cpf:cpf phone:phone resolver:resolve reject: reject];
+    [mindsDigital authentication:delegate.navController document:document phone:phone resolver:resolve reject: reject];
 
   });
 }
